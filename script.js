@@ -6,6 +6,8 @@
 */
 const tabellone = document.querySelector("#tabellone");
 const comandi = document.querySelector(".comandi");
+const spanCronologia = document.querySelector("#cronologia");
+const ultimoNumero = document.querySelector("#ultimo-numero");
 
 let usciti = []; // array dei numeri già estratti
 
@@ -26,6 +28,8 @@ comandi.addEventListener("click", (e) => {
     estrai();
   } else if (e.target.id === "reset") {
     usciti = [];
+    ultimoNumero.textContent = '';
+    spanCronologia.textContent = "";
     tabellone.innerHTML = "";
     rendiTabellone();
   }
@@ -55,11 +59,11 @@ const estrai = () => {
     return estrai();
   }
 
-  const ultimoNumero = document.querySelector("#ultimo-numero");
+  
   ultimoNumero.textContent = randomNumber;
- 
 
   usciti.push(randomNumber);
+  rendiCronologia(usciti)
 
   aggiornaTabellone(randomNumber);
 };
@@ -68,4 +72,12 @@ const aggiornaTabellone = (numero) => {
   const celle = document.querySelector(`[data-numero="${numero}"]`);
 
   celle.classList.add("numero", "uscito");
+};
+
+const rendiCronologia = (array) => {
+  
+  spanCronologia.textContent = "";
+  for (let i = 0; i < array.slice(-10).length; i++) {
+    spanCronologia.textContent += array.slice(-10)[i]+' ';
+  }
 };
